@@ -1,0 +1,43 @@
+
+def findMinVertex(weights,n,visited):
+    minVertex=-1
+    for i in range(n):
+        if not visited[i] and (minVertex==-1 or weights[i]<weights[minVertex]):
+            minVertex=i
+    return minVertex
+
+def prims(edges,n,e):
+    visited=[False]*n
+    weights=[float("inf")]*n
+    parent=[-1]*n
+
+    weights[0]=0
+    parent[0]=-1
+
+    for i in range(n):
+        x=findMinVertex(weights,n,visited)
+        visited[x]=True
+        for j in range(n):
+            if not visited[j] and edges[x][j]!=0:
+                if edges[x][j]<weights[j]:
+                    weights[j]=edges[x][j]
+                    parent[j]=x
+    for i in range(n):
+        print(i, " ",parent[i])
+
+if __name__=="__main__":
+    n=int(input("Enter number of vertices"))
+    e=int(input("Enter number of edges"))
+
+    edges=[]*n
+    for i in range(n):
+        x=[0]*n
+        edges.append(x)
+    print(edges)
+
+    for i in range(e):
+        s,d,w=map(int,input().split())
+        edges[s][d]=w
+        edges[d][s] = w
+
+    prims(edges,n,e)
