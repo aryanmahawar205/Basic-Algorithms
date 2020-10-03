@@ -1,0 +1,53 @@
+
+
+class Edge:
+    def __init__(self):
+        self.src = 0
+        self.dest = 0
+        self.weight = 0
+
+
+def findParent(src, parent):
+    if parent[src] == 0:
+        return src
+    return findParent(parent[src], parent)
+
+
+def kruskals(edges, n, e):
+    edges.sort(key=lambda edge: edge.weight)
+    edge = Edge()
+    output = [edge] * (n - 1)  # n-1 edges
+    parent = [0] * (n)
+
+    count = 0
+    i = 0
+    while count != (n - 1):
+        currentEdge = edges[i]
+        srcp = findParent(currentEdge.src, parent)
+        destp = findParent(currentEdge.dest, parent)
+        if srcp != destp:
+            output[count] = currentEdge
+            count += 1
+            parent[srcp] = destp
+        i += 1
+
+    print("MST is:")
+    for i in range(n - 1):
+        print(output[i].src, "+", output[i].dest, "+", output[i].weight)
+
+
+n = int(input("Enter number of vertices"))
+e = int(input("Enter number of edges"))
+
+edge = Edge()
+edges = [edge] * e
+
+for i in range(e):
+    src, dest, weight = map(int, input().split())
+    edge1 = Edge()
+    edge1.src = src
+    edge1.dest = dest
+    edge1.weight = weight
+    edges[i] = edge1
+
+kruskals(edges, n, e)
