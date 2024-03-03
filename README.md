@@ -1,3 +1,2 @@
 # Basic-Algorithms
-Contains Basic algorithms applied on databases.
-
+Some basic algorithms to work with databases.
